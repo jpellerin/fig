@@ -116,6 +116,9 @@ class Container(object):
     def logs(self, *args, **kwargs):
         return self.client.logs(self.id, *args, **kwargs)
 
+    def output(self, *args, **kwargs):
+        return self.client.container_output(self.id, *args, **kwargs)
+
     def inspect(self):
         self.dictionary = self.client.inspect_container(self.id)
         return self.dictionary
