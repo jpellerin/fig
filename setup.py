@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from setuptools import setup
+from __future__ import unicode_literals
+from __future__ import absolute_import
+from setuptools import setup, find_packages
 import re
 import os
 import codecs
 
 
-# Borrowed from
-# https://github.com/jezdez/django_compressor/blob/develop/setup.py
 def read(*parts):
-    return codecs.open(os.path.join(os.path.dirname(__file__), *parts)).read()
+    path = os.path.join(os.path.dirname(__file__), *parts)
+    with codecs.open(path, encoding='utf-8') as fobj:
+        return fobj.read()
 
 
 def find_version(*file_paths):
@@ -24,6 +25,9 @@ def find_version(*file_paths):
 with open('requirements.txt') as f:
     install_requires = f.read().splitlines()
 
+with open('requirements-dev.txt') as f:
+    tests_require = f.read().splitlines()
+
 setup(
     name='fig',
     version=find_version("fig", "__init__.py"),
@@ -31,10 +35,11 @@ setup(
     url='https://github.com/orchardup/fig',
     author='Orchard Laboratories Ltd.',
     author_email='hello@orchardup.com',
-    packages=['fig', 'fig.cli'],
-    package_data={},
+    packages=find_packages(),
     include_package_data=True,
+    test_suite='nose.collector',
     install_requires=install_requires,
+    tests_require=tests_require,
     entry_points="""
     [console_scripts]
     fig=fig.cli.main:main

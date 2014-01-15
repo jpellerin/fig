@@ -1,5 +1,7 @@
 Fig
-====
+===
+
+[![Build Status](https://travis-ci.org/orchardup/fig.png?branch=master)](https://travis-ci.org/orchardup/fig)
 
 Punctual, lightweight development environments using Docker.
 
@@ -18,13 +20,7 @@ db:
 
 Then type `fig up`, and Fig will start and run your entire app:
 
-    $ fig up
-    Pulling image orchardup/postgresql...
-    Building web...
-    Starting example_db_1...
-    Starting example_web_1...
-    example_db_1 | 2014-01-02 14:47:18 UTC LOG:  database system is ready to accept connections
-    example_web_1 |  * Running on http://0.0.0.0:5000/
+![example fig run](https://orchardup.com/static/images/fig-example.5807d0d2dbe6.gif)
 
 There are commands to:
 
@@ -43,9 +39,9 @@ Let's get a basic Python web app running on Fig. It assumes a little knowledge o
 
 First, install Docker. If you're on OS X, you can use [docker-osx](https://github.com/noplay/docker-osx):
 
-    $ curl https://raw.github.com/noplay/docker-osx/master/docker > /usr/local/bin/docker
-    $ chmod +x /usr/local/bin/docker
-    $ docker version
+    $ curl https://raw.github.com/noplay/docker-osx/master/docker-osx > /usr/local/bin/docker-osx
+    $ chmod +x /usr/local/bin/docker-osx
+    $ docker-osx shell
 
 Docker has guides for [Ubuntu](http://docs.docker.io/en/latest/installation/ubuntulinux/) and [other platforms](http://docs.docker.io/en/latest/installation/) in their documentation.
 

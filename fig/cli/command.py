@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+from __future__ import absolute_import
 from docker import Client
+import errno
 import logging
 import os
 import re
@@ -12,13 +15,25 @@ from .utils import cached_property, docker_url
 log = logging.getLogger(__name__)
 
 class Command(DocoptCommand):
+    base_dir = '.'
+
     @cached_property
     def client(self):
         return Client(docker_url())
 
     @cached_property
     def project(self):
-        config = yaml.load(open('fig.yml'))
+        try:
+            yaml_path = os.path.join(self.base_dir, 'fig.yml')
+            config = yaml.load(open(yaml_path))
+        except IOError as e:
+            if e.errno == errno.ENOENT:
+                log.error("Can't find %s. Are you in the right directory?", os.path.basename(e.filename))
+            else:
+                log.error(e)
+
+            exit(1)
+
         return Project.from_config(self.project_name, config, self.client)
 
     @cached_property

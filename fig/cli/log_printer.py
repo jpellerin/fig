@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from __future__ import absolute_import
 import sys
 
 from itertools import cycle
@@ -41,7 +43,7 @@ class LogPrinter(object):
             'stream': True,
         }
         params.update(self.attach_params)
-        params = dict((name, 1 if value else 0) for (name, value) in params.items())
+        params = dict((name, 1 if value else 0) for (name, value) in list(params.items()))
         return container.attach_socket(params=params, ws=True)
 
 def read_websocket(websocket):
@@ -53,10 +55,15 @@ def read_websocket(websocket):
             break
 
 def split_buffer(reader, separator):
+    """
+    Given a generator which yields strings and a separator string,
+    joins all input, splits on the separator and yields each chunk.
+    Requires that each input string is decodable as UTF-8.
+    """
     buffered = ''
 
     for data in reader:
-        lines = (buffered + data).split(separator)
+        lines = (buffered + data.decode('utf-8')).split(separator)
         for line in lines[:-1]:
             yield line + separator
         if len(lines) > 1:

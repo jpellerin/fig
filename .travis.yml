@@ -4,8 +4,16 @@ python:
   - "2.7"
   - "3.2"
   - "3.3"
-install:
- - python setup.py install
- - pip install nose==1.3.0
-script: nosetests
+
+matrix:
+  allow_failures:
+    - python: "3.2"
+    - python: "3.3"
+
+install: script/travis-install
+
+script:
+ - pwd
+ - env
+ - sekexe/run "`pwd`/script/travis $TRAVIS_PYTHON_VERSION"
 
